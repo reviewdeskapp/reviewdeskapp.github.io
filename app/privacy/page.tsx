@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy" updated="October 28, 2026">
+    <LegalPage title="Privacy Policy" updated="October 30, 2026">
       <p>
         ReviewDesk is a native macOS app that shows your GitHub pull requests and, optionally, the
         status of linked Jira issues. It is built so that your data stays between your Mac and the
@@ -62,8 +62,9 @@ export default function PrivacyPage() {
       <p>
         If you choose to send feedback from inside the app, the form is provided by{" "}
         <a href="https://tally.so/help/privacy-policy">Tally</a>. It receives only what you type,
-        plus the app version, build number and macOS version to help diagnose issues. Feedback is
-        used solely to support and improve ReviewDesk.
+        plus the app version, build number and macOS version to help diagnose issues. Leaving an
+        email address is optional and only lets us reply to you. Feedback is used solely to support
+        and improve ReviewDesk, and is never sold or shared.
       </p>
 
       <h2>Children</h2>
