@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* ============================================================
+   THEME LOCK: dark, single theme for the whole page.
+   One accent (merge green) used identically across sections.
+   ============================================================ */
+@theme {
+  --color-bg: #0a0c10;
+  --color-surface: #10131a;
+  --color-surface2: #161a22;
+  --color-line: #232a34;
+  --color-line-soft: #1b212b;
+  --color-ink: #e7edf4;
+  --color-muted: #8b98a9;
+  --color-faint: #5c6672;
+
+  /* single marketing accent */
+  --color-merge: #3fb950;
+  --color-merge-dim: #2ea043;
+
+  /* product-data semantic colors (used only inside UI mockups) */
+  --color-stat-done: #3fb950;
+  --color-stat-progress: #d29922;
+  --color-stat-idle: #6e7681;
+  --color-stat-open: #539bf5;
+  --color-age-warn: #d29922;
+  --color-age-stale: #e5534b;
+
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-geist-mono);
+
+  --radius: 14px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* data-app: consistent tabular figures for ages, keys, counts */
+  font-variant-numeric: tabular-nums;
+}
+
+/* premium: kill orphans in running copy */
+p {
+  text-wrap: pretty;
+}
+
+/* accessible, on-brand focus ring for keyboard users */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--color-merge) 80%, white);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* fixed grain overlay to break digital flatness (pointer-events off) */
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.028;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* tinted panel shadow: cool, matches the dark base (not pure black) */
+.shadow-panel {
+  box-shadow: 0 30px 80px -32px rgba(6, 12, 22, 0.9),
+    0 2px 8px -4px rgba(63, 185, 80, 0.12);
+}
+
+/* glass edge: a 1px top highlight so card rims catch the light */
+.edge-hl {
+  position: relative;
+}
+.edge-hl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding-top: 1px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklab, white 8%, transparent),
+    transparent 40%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-merge) 30%, transparent);
+  color: #fff;
+}
+
+/* ambient grain / depth, kept subtle */
+.bg-grid {
+  background-image: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-line) 55%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-line) 55%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 46px 46px;
+}
+
+.glow-merge {
+  background: radial-gradient(
+    60% 60% at 50% 0%,
+    color-mix(in oklab, var(--color-merge) 22%, transparent),
+    transparent 70%
+  );
+}
+
+/* ------------------------------------------------------------
+   Scroll reveal (MOTION_INTENSITY 4): opacity + small lift.
+   Wrapped in prefers-reduced-motion.
+   ------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee-track,
+  .merge-pulse {
+    animation: none !important;
+  }
+}
+
+/* CTA hover physics */
+.cta {
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.18s ease, background-color 0.18s ease;
+}
+.cta:hover {
+  transform: translateY(-2px);
+}
+.cta:active {
+  transform: translateY(0);
+}
+
+/* logo marquee */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+}
+.marquee-track {
+  animation: marquee 34s linear infinite;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* the MERGE badge pulse inside the product window */
+.merge-pulse {
+  animation: mergePulse 2.6s ease-in-out infinite;
+}
+@keyframes mergePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-merge) 55%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-merge) 0%, transparent);
+  }
+}
