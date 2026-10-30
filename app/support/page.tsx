@@ -4,8 +4,9 @@ import { LegalPage } from "../components/legal-page";
 const FEEDBACK_FORM = "https://tally.so/r/RGE5Ev";
 
 export const metadata: Metadata = {
-  title: "Support — ReviewDesk",
+  title: "Support",
   description: "Get help with ReviewDesk.",
+  alternates: { canonical: "/support/" },
 };
 
 export default function SupportPage() {

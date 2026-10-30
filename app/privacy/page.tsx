@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { LegalPage } from "../components/legal-page";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — ReviewDesk",
+  title: "Privacy Policy",
   description: "How ReviewDesk handles your data.",
+  alternates: { canonical: "/privacy/" },
 };
 
 export default function PrivacyPage() {
